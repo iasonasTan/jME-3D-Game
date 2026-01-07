@@ -10,9 +10,12 @@ import com.jme3.system.AppSettings;
 public class DesktopLauncher {
     public static void main(String[] args) {
         final Game game = new Game();
-
         final AppSettings appSettings = new AppSettings(true);
+
+        appSettings.setWidth(1920);
+        appSettings.setHeight(1080);
         appSettings.setFullscreen(true);
+
         game.setSettings(appSettings);
         game.setDisplayStatView(false);
         game.setDisplayFps(false);
