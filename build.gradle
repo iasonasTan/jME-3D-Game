@@ -17,7 +17,6 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 
-
 task buildAllDistributions {
     dependsOn ':vrdesktop:buildAllDistributions'
 
@@ -25,4 +24,3 @@ task buildAllDistributions {
         println(" #### Check the individual modules build/distributions folders for distributable zips etc #### ")
     }
 }
-

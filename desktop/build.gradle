@@ -60,8 +60,7 @@ task downloadAndUnzipWindowsJre(dependsOn: downloadWindowsJre, type: Copy) {
     }
 }
 
-task buildWindowsDistribution(dependsOn: [distZip, downloadAndUnzipWindowsJre], type: Copy)
-{
+task buildWindowsDistribution(dependsOn: [distZip, downloadAndUnzipWindowsJre], type: Copy) {
     group 'distribution'
     from files("${projectDir}/scripts/desktopDeployment/Game.bat"), zipTree(distZip.archiveFile), "${buildDir}/jres/windowsJre"
     into new File(buildDir, 'distributions/Game-windows')
@@ -92,8 +91,7 @@ task downloadAndUnzipLinuxJre(dependsOn: downloadLinuxJre, type: Copy) {
     }
 }
 
-task buildLinuxDistribution(dependsOn: [distZip, downloadAndUnzipLinuxJre], type: Copy)
-{
+task buildLinuxDistribution(dependsOn: [distZip, downloadAndUnzipLinuxJre], type: Copy) {
     group 'distribution'
     from files("${projectDir}/scripts/desktopDeployment/Game.sh"){
         fileMode 0755
@@ -136,8 +134,7 @@ task downloadAndUnzipMacJre(dependsOn: downloadMacJre, type: Copy) {
     }
 }
 
-task buildMacDistribution(dependsOn: [distZip, downloadAndUnzipMacJre], type: Copy)
-{
+task buildMacDistribution(dependsOn: [distZip, downloadAndUnzipMacJre], type: Copy) {
     group 'distribution'
     from files("${projectDir}/scripts/desktopDeployment/Game.command"){
         fileMode 0755

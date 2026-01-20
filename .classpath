@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="desktop/src/main/java"/>
+	<classpathentry kind="src" path="game/src/main/java"/>
+	<classpathentry kind="lib" path="desktop/build/libs/desktop-1.0.0.jar"/>
+	<classpathentry kind="lib" path="game/build/libs/game.jar"/>
+	<classpathentry kind="lib" path="gradle/wrapper/gradle-wrapper.jar"/>
+	<classpathentry kind="output" path="desktop/build/classes/java/main"/>
+</classpath>

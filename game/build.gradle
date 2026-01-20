@@ -4,12 +4,9 @@ plugins {
 }
 
 java {
-    
     sourceCompatibility = '11'
     targetCompatibility = '11'
-    
 }
-
 ext.jmonkeyengineVersion = '3.8.1-stable'
 
 dependencies {
@@ -19,6 +16,5 @@ dependencies {
 
     implementation 'org.jmonkeyengine:jme3-effects:' + jmonkeyengineVersion
     implementation 'org.jmonkeyengine:jme3-terrain:' + jmonkeyengineVersion
-    implementation 'org.jmonkeyengine:jme3-jbullet:' + jmonkeyengineVersion
-
+    //implementation 'org.jmonkeyengine:jme3-jbullet:' + jmonkeyengineVersion
 }

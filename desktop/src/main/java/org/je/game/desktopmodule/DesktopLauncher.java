@@ -5,16 +5,16 @@ import com.jme3.system.AppSettings;
 
 /**
  * Used to launch a jme application in desktop environment
- *
  */
 public class DesktopLauncher {
     public static void main(String[] args) {
         final Game game = new Game();
         final AppSettings appSettings = new AppSettings(true);
 
-        appSettings.setWidth(1920);
-        appSettings.setHeight(1080);
-        appSettings.setFullscreen(true);
+	    //appSettings.setWindowWidth(1366);
+        //appSettings.setWindowHeight(768);
+        //appSettings.setFullscreen(false);
+	    appSettings.setWindowSize(1366, 768);
 
         game.setSettings(appSettings);
         game.setDisplayStatView(false);

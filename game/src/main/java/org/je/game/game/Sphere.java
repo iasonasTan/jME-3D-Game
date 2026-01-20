@@ -8,19 +8,31 @@ import com.jme3.scene.Spatial;
 
 import java.util.List;
 
-public final class Sphere extends Entity {
+public final class Sphere extends AbstractEntity {
     private final Spatial mModel;
     private final Vector3f mSpeed;
     private final Enemy mEnemy;
 
-    public Sphere(Vector3f speed, AssetManager assetManager, Node rootNode, Entity parent, List<Spatial> map, Enemy mEnemy) {
-        super(map);
-        mModel = assetManager.loadModel("Models/Bullet.obj");
-        this.mEnemy = mEnemy;
-        rootNode.attachChild(mModel);
-        setLocation(parent.getLocation());
-        speed.multLocal(20f);
-        mSpeed = speed;
+    public Sphere(Context context, Vector3f speed, AbstractEntity parent, Enemy enemy) {
+        super(context);
+        mEnemy = enemy;
+        mModel = context.assetManager().loadModel("Models/Bullet.obj");
+        mSpeed = speed.mult(20f);
+        context.rootNode().attachChild(mModel);
+        setLocation(parent.getLocation().clone());
+    }
+
+    @Override
+    public void update(float tpf) {
+        Vector3f vec = mSpeed.clone();
+        vec.x *= tpf;
+        vec.y *= tpf;
+        vec.z *= tpf;
+        mModel.move(vec);
+
+        if (getBound().intersects(mEnemy.getBound())) {
+            Player.increaseScore();
+        }
     }
 
     @Override
@@ -37,17 +49,4 @@ public final class Sphere extends Entity {
     protected BoundingVolume getBound() {
         return mModel.getWorldBound();
     }
-
-    public void update(float delta) {
-        Vector3f vec = mSpeed.clone();
-        vec.x *= delta;
-        vec.y *= delta;
-        vec.z *= delta;
-        mModel.move(vec);
-
-        if(getBound().intersects(mEnemy.getBound())) {
-            Player.increaseScore();
-        }
-    }
-
 }

@@ -8,17 +8,15 @@ import com.jme3.scene.Spatial;
 
 import java.util.List;
 
-public final class Enemy extends Entity {
+public final class Enemy extends AbstractEntity {
     private final Spatial mModel;
-    private final Player mPlayer;
 
-    public Enemy(AssetManager am, List<Spatial> map, Player player, Node rootNode) {
-        super(map);
-        mModel = am.loadModel("Models/Enemy.obj");
-        mPlayer = player;
-        rootNode.attachChild(mModel);
+    public Enemy(Context context) {
+        super(context);
+        mModel = context.assetManager().loadModel("Models/Enemy.obj");
+        context.rootNode().attachChild(mModel);
 
-        setLocation(new Vector3f(0, 400, 0));
+        setLocation(new Vector3f(0, 200, 0));
     }
 
     @Override
@@ -26,7 +24,7 @@ public final class Enemy extends Entity {
         super.update(tpf);
         float speed = 10f;
 
-        Vector3f playerPos = mPlayer.getLocation().clone();
+        Vector3f playerPos = context.player().getLocation().clone();
         float diffX = playerPos.x - getLocation().x;
         float diffZ = playerPos.z - getLocation().z;
         float diff = (float)Math.sqrt(diffX*diffX + diffZ*diffZ);
