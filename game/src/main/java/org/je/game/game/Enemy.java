@@ -11,11 +11,12 @@ import java.util.List;
 public final class Enemy extends AbstractEntity {
     private final Spatial mModel;
 
+    private boolean mJumped = false;
+
     public Enemy(Context context) {
         super(context);
         mModel = context.assetManager().loadModel("Models/Enemy.obj");
         context.rootNode().attachChild(mModel);
-
         setLocation(new Vector3f(0, 200, 0));
     }
 
@@ -29,17 +30,28 @@ public final class Enemy extends AbstractEntity {
         float diffZ = playerPos.z - getLocation().z;
         float diff = (float)Math.sqrt(diffX*diffX + diffZ*diffZ);
 
-        float mVelocityX = diffX/diff;
-        float mVelocityZ = diffZ/diff;
-        if (!move(new Vector3f(mVelocityX, 0, mVelocityZ).mult(tpf*speed))) {
+        float velocityX = diffX/diff;
+        float velocityZ = diffZ/diff;
+        boolean moved = move(
+            new Vector3f(velocityX, 0, velocityZ).mult(tpf*speed)
+        );
+        if (!moved)
             jump();
-        }
     }
 
     @Override
     protected void onFall(float tpf) {
         super.onFall(tpf);
-        jump();
+        if(!mJumped) {
+            jump();
+            mJumped = true;
+        }
+    }
+
+    @Override
+    protected void onStopFalling(float tpf) {
+        super.onStopFalling(tpf);
+        mJumped = false;
     }
 
     @Override

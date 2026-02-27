@@ -22,26 +22,30 @@ public abstract class AbstractEntity {
     public abstract void setLocation(Vector3f location);
     protected abstract BoundingVolume getBound();
 
-    protected void onFall(float tpf) {
-        falling = true;
-    }
-
     public void update(float tpf) {
         Vector3f locationWithGravity = getLocation().clone();
         locationWithGravity.y -= velocityVertical * tpf;
-        if (setPos(locationWithGravity)) { // can fall more
+
+        boolean moved = setPos(locationWithGravity);
+        if (moved) {
             velocityVertical += Game.GRAVITY * tpf;
-            if(!falling)
+            if(!falling) {
+                falling = true;
+                jumping = false;
                 onFall(tpf);
-        } else { // touch ground
-            velocityVertical = 0f;
-            jumping = false;
-            falling = false;
+            }
+        } else {
+            if(falling) {
+                velocityVertical = 0f;
+                falling = false;
+                onStopFalling(tpf);
+            }
         }
     }
     
     protected void jump() {
-        if (jumping) return;
+        if (jumping)
+            return;
         velocityVertical = -7f;
         jumping = true;
     }
@@ -52,19 +56,25 @@ public abstract class AbstractEntity {
     }
 
     public boolean setPos(Vector3f newLocation) {
-        Vector3f prevLoc = getLocation().clone();
-        setLocation(newLocation);
-
         if (!enableCollisions) {
             setLocation(newLocation);
             return true;
         }
         
+        Vector3f prevLoc = getLocation().clone();
+        setLocation(newLocation);
+
         if (context.hasCollisionWithMap(this)) {
             setLocation(prevLoc);
             return false;
+        } else { 
+            return true;
         }
+    }
 
-        return true;
+    protected void onFall(float tpf) {
+    }
+
+    protected void onStopFalling(float tpf) {
     }
 }
