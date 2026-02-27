@@ -31,9 +31,15 @@ public final class Enemy extends AbstractEntity {
 
         float mVelocityX = diffX/diff;
         float mVelocityZ = diffZ/diff;
-        if (!move(new Vector3f(mVelocityX, 0, mVelocityZ).mult(tpf).mult(speed))) {
-            velocityVertical = -10f;
+        if (!move(new Vector3f(mVelocityX, 0, mVelocityZ).mult(tpf*speed))) {
+            jump();
         }
+    }
+
+    @Override
+    protected void onFall(float tpf) {
+        super.onFall(tpf);
+        jump();
     }
 
     @Override

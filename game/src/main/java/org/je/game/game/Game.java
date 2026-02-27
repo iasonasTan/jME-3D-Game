@@ -82,7 +82,7 @@ public class Game extends SimpleApplication implements Context {
         mMap.add(floor1);
 
         Spatial floor2 = assetManager.loadModel("Models/Floor.obj");
-        floor2.move(69*2, -8, 40*2);
+        floor2.move(70*2, -8, 42*2);
         rootNode.attachChild(floor2);
         mMap.add(floor2);
 

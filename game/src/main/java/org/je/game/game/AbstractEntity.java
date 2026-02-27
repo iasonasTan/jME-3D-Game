@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class AbstractEntity {
     protected final Context context;
 
-    protected boolean jumping = false;
+    protected boolean jumping = false, falling = false;
     protected float velocityVertical = Game.GRAVITY;
     protected boolean enableCollisions = true;
 
@@ -22,14 +22,21 @@ public abstract class AbstractEntity {
     public abstract void setLocation(Vector3f location);
     protected abstract BoundingVolume getBound();
 
+    protected void onFall(float tpf) {
+        falling = true;
+    }
+
     public void update(float tpf) {
         Vector3f locationWithGravity = getLocation().clone();
         locationWithGravity.y -= velocityVertical * tpf;
-        if (setPos(locationWithGravity)) {
+        if (setPos(locationWithGravity)) { // can fall more
             velocityVertical += Game.GRAVITY * tpf;
-        } else {
+            if(!falling)
+                onFall(tpf);
+        } else { // touch ground
             velocityVertical = 0f;
             jumping = false;
+            falling = false;
         }
     }
     
